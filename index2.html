@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Layout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: grid;
+            grid-template-rows: 120px minmax(0, 1fr) 58px;
+        }
+
+        header {
+            background-color: #2878c8;
+        }
+
+        main {
+            min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(64px, 18vw) minmax(0, 1fr) minmax(64px, 18vw);
+        }
+
+        aside {
+            background-color: #55a765;
+        }
+
+        .content {
+            min-width: 0;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-rows: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            padding: 24px;
+            background-color: #fff;
+        }
+
+        .cell {
+            min-width: 0;
+            min-height: 0;
+            background-color: #aaa;
+            transition: transform 180ms ease;
+        }
+
+        .cell:hover {
+            transform: scale(1.04);
+            z-index: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cell {
+                transition: none;
+            }
+        }
+
+        footer {
+            background-color: #f2d34f;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                grid-template-rows: 80px minmax(0, 1fr) 48px;
+            }
+
+            main {
+                grid-template-columns: minmax(24px, 8vw) minmax(0, 1fr) minmax(24px, 8vw);
+            }
+
+            .content {
+                gap: 12px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header aria-label="Blue header"></header>
+    <main>
+        <aside aria-label="Left green sidebar"></aside>
+        <section class="content" aria-label="Six-cell gray grid">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </section>
+        <aside aria-label="Right green sidebar"></aside>
+    </main>
+    <footer aria-label="Yellow footer"></footer>
+</body>
+</html>
