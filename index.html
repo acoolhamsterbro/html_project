@@ -1,1068 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f7f4">
+    <title>Universal Creator — Turn ideas into a clear plan</title>
     <style>
         :root {
-            --bg: #edf3fb;
-            --surface: #ffffff;
-            --surface-2: #f5f8fc;
-            --line: #e2eaf4;
-            --text: #1f2937;
-            --muted: #67768a;
-            --brand: #2f6fe8;
-            --brand-2: #1cbb85;
-            --brand-3: #ff7a59;
-            --sidebar-start: #74d299;
-            --sidebar-end: #2f9a6f;
-            --shadow: 0 18px 45px rgba(25, 41, 64, 0.12);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(180deg, #edf3fb 0%, #f8fafc 18%, #eef3fb 100%);
-            color: var(--text);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        button {
-            cursor: pointer;
-            font: inherit;
-        }
-
-        header {
-            height: 124px;
-            background: linear-gradient(135deg, #1d5bc9 0%, #2d80e5 32%, #4cc3d2 100%);
-            flex: none;
-            box-shadow: 0 18px 30px rgba(35, 93, 183, 0.18);
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top left, rgba(255,255,255,0.25), transparent 35%);
-        }
-
-        .topbar {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 28px;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 180px;
-        }
-
-        .logo-mark {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08));
-            border: 1px solid rgba(255,255,255,0.35);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-            font-size: 1.6rem;
-        }
-
-        .brand-name {
-            color: white;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        .search-wrap {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-bar {
-            width: min(100%, 780px);
-            height: 58px;
-            background: rgba(255,255,255,0.17);
-            border: 1px solid rgba(255,255,255,0.28);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            padding: 10px 18px;
-            gap: 14px;
-            backdrop-filter: blur(6px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-        }
-
-        .search-icon {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .search-bar input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .search-bar input::placeholder {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            min-width: 220px;
-            justify-content: flex-end;
-        }
-
-        .icon-pill,
-        .user-pill {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            padding: 10px 14px;
-            height: 52px;
-            backdrop-filter: blur(4px);
-        }
-
-        .cart-trigger {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 10px 12px;
-            min-width: 52px;
-            justify-content: center;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -6px;
-            right: -4px;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 999px;
-            background: #ffbf47;
-            color: #1b2430;
-            font-size: 0.72rem;
-            font-weight: 800;
-            display: grid;
-            place-items: center;
-            padding: 0 6px;
-            box-shadow: 0 6px 12px rgba(255, 191, 71, 0.35);
-        }
-
-        .user-pill {
-            background: rgba(18, 38, 68, 0.2);
-        }
-
-        .user-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffd166, #ff9a5a);
-            display: grid;
-            place-items: center;
-            color: #3a2a18;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .user-name {
-            font-weight: 700;
-            font-size: 0.96rem;
-        }
-
-        main {
-            flex: 1;
-            min-height: 0;
-            display: grid;
-            grid-template-columns: minmax(220px, 18vw) minmax(0, 1fr) minmax(180px, 15vw);
-            align-items: stretch;
-            width: min(1440px, 100%);
-            margin: 0 auto;
-            gap: 20px;
-            padding: 26px 22px 30px;
-        }
-
-        aside {
-            background: linear-gradient(180deg, var(--sidebar-start) 0%, var(--sidebar-end) 100%);
-            padding: 18px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-
-        aside:last-child {
-            grid-column: 3;
-            background: linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
-            border: 1px solid var(--line);
-            box-shadow: 0 12px 28px rgba(27, 49, 83, 0.08);
-        }
-
-        .category-card,
-        .promo-card,
-        .mini-card {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 18px;
-            padding: 14px 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #fff;
-            min-height: 76px;
-            box-shadow: 0 6px 18px rgba(17, 90, 55, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .category-card:hover,
-        .promo-card:hover,
-        .mini-card:hover,
-        .product-card:hover,
-        .nav-btn:hover,
-        .add-btn:hover,
-        .favorite-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .promo-card {
-            min-height: 128px;
-            background: rgba(255,255,255,0.08);
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-        }
-
-        .category-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.18);
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .category-label,
-        .promo-label {
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-        }
-
-        .promo-label {
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            opacity: 0.95;
-        }
-
-        .promo-text {
-            font-size: 1.25rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .right-aside {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 12px;
-        }
-
-        .mini-card {
-            background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
-            border-color: var(--line);
-            color: var(--text);
-            min-height: 110px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 16px;
-            box-shadow: 0 10px 18px rgba(13, 35, 62, 0.06);
-        }
-
-        .mini-card .promo-label {
-            color: var(--brand);
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-        }
-
-        .mini-card .promo-text {
-            font-size: 1.05rem;
-            color: var(--text);
-        }
-
-        .products-panel {
-            grid-column: 2;
-            min-width: 0;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            padding: 22px;
-            box-sizing: border-box;
-            background: rgba(255,255,255,0.52);
-            border: 1px solid rgba(255,255,255,0.6);
-            border-radius: 26px;
-            box-shadow: 0 18px 42px rgba(29, 55, 83, 0.08);
-            backdrop-filter: blur(3px);
-        }
-
-        .product-section {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .section-title {
-            margin: 0;
-            font-size: clamp(1.5rem, 2vw, 2.1rem);
-            font-weight: 900;
-            color: #1c2432;
-            letter-spacing: -0.04em;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            width: 42px;
-            height: 42px;
-            border: 1px solid #dfe7f3;
-            background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
-            border-radius: 12px;
-            font-size: 1.7rem;
-            color: var(--text);
-            display: grid;
-            place-items: center;
-            box-shadow: 0 10px 18px rgba(32, 43, 58, 0.06);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-        }
-
-        .product-card {
-            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 12px;
-            box-shadow: 0 12px 22px rgba(28, 44, 65, 0.07);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .product-image {
-            height: 176px;
-            background: linear-gradient(135deg, #edf5ff 0%, #e9f0f7 35%, #f7efe4 100%);
-            border-radius: 16px;
-            display: grid;
-            place-items: center;
-            color: #8596ac;
-            font-size: 3rem;
-            border: 1px solid #e4ebf5;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-image::after {
-            content: "";
-            position: absolute;
-            inset: 12px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.2);
-            border: 1px dashed rgba(80,110,150,0.18);
-        }
-
-        .product-tag {
-            display: inline-block;
-            margin-top: 12px;
-            background: rgba(255, 122, 89, 0.12);
-            color: var(--brand-3);
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            font-weight: 800;
-            border-radius: 999px;
-            padding: 5px 9px;
-        }
-
-        .product-name {
-            margin: 10px 0 8px;
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: #1f2937;
-            line-height: 1.35;
-        }
-
-        .price-row {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-        }
-
-        .price-current {
-            font-size: 1.28rem;
-            font-weight: 900;
-            color: #111827;
-        }
-
-        .price-old {
-            font-size: 0.8rem;
-            color: #8a93a7;
-            text-decoration: line-through;
-        }
-
-        .discount {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--brand-2);
-            background: rgba(28,187,133,0.12);
-            border-radius: 999px;
-            padding: 4px 8px;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .add-btn {
-            flex: 1;
-            border: none;
-            background: linear-gradient(135deg, #2f8a5b 0%, #3491d4 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 11px 12px;
-            font-size: 0.88rem;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            box-shadow: 0 12px 20px rgba(39, 120, 190, 0.22);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .favorite-btn {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #ebeff5;
-            background: #fff;
-            border-radius: 10px;
-            font-size: 1.15rem;
-            color: #ff6c7a;
-            box-shadow: 0 8px 18px rgba(63, 76, 100, 0.06);
-            transition: transform 0.2s ease;
-        }
-
-        .cart-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.58);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.22s ease;
-            z-index: 20;
-        }
-
-        .cart-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .cart-panel {
-            position: fixed;
-            top: 18px;
-            right: 18px;
-            width: min(420px, calc(100vw - 24px));
-            max-height: calc(100vh - 36px);
-            background: #ffffff;
-            border-radius: 22px;
-            border: 1px solid rgba(162, 177, 198, 0.4);
-            box-shadow: 0 30px 70px rgba(15, 23, 42, 0.22);
-            z-index: 30;
-            transform: translateX(calc(100% + 30px));
-            transition: transform 0.28s ease;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .cart-panel.open {
-            transform: translateX(0);
-        }
-
-        .cart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 18px 18px 12px;
-            border-bottom: 1px solid #edf1f5;
-        }
-
-        .cart-header h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #17212f;
-        }
-
-        .close-cart {
-            border: none;
-            background: #f1f5fa;
-            color: #384860;
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-        }
-
-        .cart-items {
-            padding: 14px 14px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            overflow-y: auto;
-            max-height: 440px;
-        }
-
-        .empty-state {
-            border: 1px dashed #d9e1ee;
-            background: #f8fafc;
-            border-radius: 16px;
-            color: #67768a;
-            text-align: center;
-            padding: 28px 12px;
-            font-weight: 600;
-        }
-
-        .cart-item {
-            display: grid;
-            grid-template-columns: 64px 1fr auto;
-            gap: 12px;
-            align-items: center;
-            padding: 10px;
-            background: #f9fbff;
-            border: 1px solid #edf2f8;
-            border-radius: 16px;
-        }
-
-        .cart-thumb {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #ebf4ff, #efe7dc);
-            display: grid;
-            place-items: center;
-            font-size: 2rem;
-            border: 1px solid #e1e9f3;
-        }
-
-        .cart-item-info {
-            min-width: 0;
-        }
-
-        .cart-item-name {
-            margin: 0 0 2px;
-            font-size: 0.94rem;
-            color: #1e293b;
-            font-weight: 700;
-        }
-
-        .cart-item-desc {
-            margin: 0 0 4px;
-            font-size: 0.75rem;
-            color: #697a90;
-            line-height: 1.35;
-        }
-
-        .cart-item-price {
-            font-size: 0.88rem;
-            font-weight: 800;
-            color: #111827;
-        }
-
-        .cart-item-remove {
-            border: none;
-            background: transparent;
-            color: #7a889d;
-            font-size: 1.2rem;
-            padding: 4px;
-            cursor: pointer;
-        }
-
-        .cart-footer {
-            padding: 16px 18px 18px;
-            border-top: 1px solid #edf1f5;
-            background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
-        }
-
-        .subtotal-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.96rem;
-            color: #445265;
-        }
-
-        .subtotal-row strong {
-            font-size: 1.1rem;
-            color: #111827;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            border: none;
-            background: linear-gradient(135deg, #2f8a5b 0%, #2d7ae3 100%);
-            color: white;
-            font-weight: 800;
-            padding: 13px 18px;
-            border-radius: 12px;
-            font-size: 0.96rem;
-            box-shadow: 0 15px 24px rgba(39, 120, 190, 0.18);
-        }
-
-        body.cart-open {
-            overflow: hidden;
-        }
-
-        @media (max-width: 900px) {
-            main {
-                grid-template-columns: 1fr;
-                padding: 18px 14px 24px;
-            }
-
-            .products-panel {
-                grid-column: auto;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            aside {
-                order: 0;
-            }
-
-            .products-panel {
-                order: 1;
-            }
-
-            aside:last-child {
-                order: 2;
-                grid-column: auto;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .topbar {
-                gap: 12px;
-                padding: 0 14px;
-            }
-
-            .brand-name {
-                font-size: 0.94rem;
-            }
-
-            .search-wrap {
-                display: none;
-            }
-
-            .top-actions {
-                gap: 8px;
-                min-width: auto;
-            }
-
-            .user-pill {
-                padding: 8px 10px;
-            }
-
-            .user-name {
-                display: none;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            main {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-        }
-
-        footer {
-            height: 58px;
-            background: linear-gradient(90deg, #f1d262 0%, #f7e16d 100%);
-            flex: none;
+            --ink: #252923;
+            --muted: #777c73;
+            --line: #e7e9e2;
+            --canvas: #f7f7f4;
+            --green: #315f48;
+            --green-dark: #264b39;
+            --green-soft: #edf3ed;
+            --orange: #d98159;
+            --serif: "Iowan Old Style", "Baskerville", "Palatino Linotype", Georgia, serif;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+        * { box-sizing: border-box; }
+        body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--canvas); color: var(--ink); }
+        button, input { font: inherit; }
+        .topbar { height: 70px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.84); }
+        .topbar-inner { max-width: 1220px; height: 100%; margin: auto; padding: 0 34px; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-size: 15px; font-weight: 720; letter-spacing: -.035em; text-decoration: none; }
+        .brand-mark { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 10px; background: var(--green); color: white; }
+        .brand-mark svg { width: 17px; }
+        .top-note { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+        .sparkle { color: var(--orange); font-size: 16px; }
+        main { max-width: 1220px; margin: 0 auto; padding: 0 34px 58px; }
+        .hero { padding: 47px 0 32px; text-align: center; }
+        .eyebrow { margin: 0 0 14px; color: var(--green); font-size: 10px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+        h1 { margin: 0; font-family: var(--serif); font-size: clamp(38px, 5vw, 56px); font-weight: 500; letter-spacing: -.055em; line-height: 1.07; }
+        h1 em { color: var(--green); font-weight: 500; }
+        .hero-copy { max-width: 520px; margin: 13px auto 21px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+        .search-wrap { position: relative; display: block; max-width: 430px; margin: 0 auto; }
+        .search-icon { position: absolute; top: 50%; left: 14px; width: 17px; color: #92978e; transform: translateY(-50%); pointer-events: none; }
+        .search { width: 100%; height: 45px; padding: 0 40px; border: 1px solid #e1e4dc; border-radius: 8px; outline: none; background: white; color: var(--ink); font-size: 12px; box-shadow: 0 3px 10px #24312509; }
+        .search::placeholder { color: #a0a49c; }
+        .search:focus { border-color: #8aa390; box-shadow: 0 0 0 3px #315f4819; }
+        .search-hint { position: absolute; top: 50%; right: 11px; padding: 3px 6px; border: 1px solid var(--line); border-radius: 4px; color: #999e95; font-size: 9px; transform: translateY(-50%); }
+        .workspace { min-height: 500px; display: grid; grid-template-columns: 235px minmax(0, 1fr); border: 1px solid var(--line); border-radius: 11px; background: white; box-shadow: 0 8px 28px #2a312708; overflow: hidden; }
+        .sidebar { padding: 21px 13px; border-right: 1px solid var(--line); background: #fcfcfa; }
+        .side-label { margin: 2px 10px 10px; color: #999d95; font-size: 9px; font-weight: 750; letter-spacing: .11em; text-transform: uppercase; }
+        .section-list { display: grid; gap: 3px; }
+        .section-button { width: 100%; min-height: 39px; padding: 0 10px; display: flex; align-items: center; gap: 9px; border: 0; border-radius: 7px; background: transparent; text-align: left; cursor: pointer; }
+        .section-button:hover { background: #f1f3ee; }
+        .section-button[aria-current="true"] { background: var(--green-soft); color: var(--green-dark); font-weight: 650; }
+        .section-icon { width: 17px; color: #93988f; text-align: center; }
+        .section-button[aria-current="true"] .section-icon { color: var(--green); }
+        .section-name { flex: 1; font-size: 11px; }
+        .section-count { color: #a2a69d; font-size: 9px; }
+        .sidebar-foot { margin: 28px 5px 0; padding: 13px; border: 1px solid #e9ebe5; border-radius: 8px; background: white; }
+        .sidebar-foot .sparkle { margin-bottom: 5px; }
+        .sidebar-foot strong { display: block; margin-bottom: 5px; font-family: var(--serif); font-size: 13px; }
+        .sidebar-foot p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+        .detail { min-width: 0; padding: 28px 34px 30px; }
+        .detail-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .breadcrumb { display: flex; gap: 7px; color: #999e95; font-size: 10px; }
+        .breadcrumb span:last-child { color: var(--green); font-weight: 650; }
+        .ready-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border: 1px solid #e6ece5; border-radius: 20px; background: #fafcf9; color: #55745e; font-size: 9px; white-space: nowrap; }
+        .ready-dot { width: 6px; height: 6px; border-radius: 50%; background: #79a582; }
+        .title-row { margin-top: 22px; display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+        .title-row h2 { margin: 0; font-family: var(--serif); font-size: 32px; font-weight: 500; letter-spacing: -.045em; }
+        .title-row p { max-width: 500px; margin: 7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+        .copy-button { flex: 0 0 auto; min-height: 36px; margin-top: 2px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--green); border-radius: 7px; background: var(--green); color: white; font-size: 10px; font-weight: 650; cursor: pointer; transition: background .16s, transform .16s; }
+        .copy-button:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .copy-button:focus-visible, .section-button:focus-visible { outline: 3px solid #315f4840; outline-offset: 2px; }
+        .copy-button svg { width: 14px; }
+        .instructions { margin-top: 22px; padding: 15px 17px; border: 1px solid #e9eee7; border-radius: 8px; background: #f8faf7; }
+        .instructions-heading { margin-bottom: 10px; display: flex; align-items: center; gap: 7px; font-size: 10px; font-weight: 700; }
+        .instructions-heading span { color: var(--green); font-size: 13px; }
+        .steps { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; counter-reset: steps; }
+        .steps li { position: relative; padding-left: 23px; color: #666d64; font-size: 9px; line-height: 1.6; counter-increment: steps; }
+        .steps li::before { position: absolute; top: 0; left: 0; width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%; background: #e8efe8; color: var(--green); content: counter(steps); font-size: 8px; font-weight: 700; }
+        .template-heading { margin: 19px 0 9px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .template-heading strong { font-size: 10px; }
+        .template-heading span { color: #999e95; font-size: 9px; text-align: right; }
+        .template-box { min-height: 160px; padding: 15px 17px; border: 1px solid #e7e9e2; border-radius: 8px; background: white; }
+        .template-text { margin: 0; color: #555c53; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .privacy-note { margin: 13px 2px 0; display: flex; align-items: center; gap: 7px; color: #999e95; font-size: 9px; }
+        .privacy-note svg { width: 13px; color: #8ca18e; }
+        .empty-state { padding: 30px 12px; color: var(--muted); font-size: 11px; text-align: center; }
+        .toast { position: fixed; right: 22px; bottom: 22px; z-index: 2; padding: 11px 15px; border: 1px solid #dde7dc; border-radius: 8px; background: white; color: var(--green-dark); font-size: 11px; font-weight: 600; box-shadow: 0 8px 24px #19281c1f; opacity: 0; transform: translateY(7px); pointer-events: none; transition: opacity .2s, transform .2s; }
+        .toast.visible { opacity: 1; transform: translateY(0); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        @media (max-width: 740px) {
+            .topbar { height: 62px; }
+            .topbar-inner { padding: 0 19px; }
+            main { padding: 0 19px 35px; }
+            .hero { padding: 37px 0 26px; }
+            .workspace { grid-template-columns: 1fr; }
+            .sidebar { padding: 14px; border-right: 0; border-bottom: 1px solid var(--line); }
+            .side-label { margin: 0 1px 8px; }
+            .section-list { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
+            .section-button { width: auto; min-width: max-content; padding: 0 9px; }
+            .section-count, .sidebar-foot { display: none; }
+            .detail { padding: 23px 20px 25px; }
+        }
+        @media (max-width: 500px) {
+            .top-note { font-size: 9px; }
+            main { padding-right: 12px; padding-left: 12px; }
+            .hero { padding-top: 32px; }
+            .hero-copy { padding: 0 10px; font-size: 11px; }
+            .detail { padding: 19px 15px 21px; }
+            .title-row { flex-direction: column; gap: 12px; margin-top: 18px; }
+            .title-row h2 { font-size: 28px; }
+            .steps { grid-template-columns: 1fr; gap: 8px; }
+            .instructions { padding: 14px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="topbar">
-            <div class="brand">
-                <div class="logo-mark">⌂</div>
-                <div class="brand-name">NovaCart</div>
-            </div>
-
-            <div class="search-wrap">
-                <div class="search-bar">
-                    <span class="search-icon">⌕</span>
-                    <input type="text" placeholder="Search products, brands and more" aria-label="Search products" />
-                </div>
-            </div>
-
-            <div class="top-actions">
-                <div class="icon-pill cart-trigger" id="cartBtn" aria-label="Shopping cart" tabindex="0" role="button">
-                    🛒
-                    <span class="cart-badge" id="cartCount">0</span>
-                </div>
-                <div class="user-pill">
-                    <div class="user-avatar">A</div>
-                    <div class="user-name">Ava</div>
-                </div>
-            </div>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="#" aria-label="Universal Creator home">
+                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5v17M3.5 12h17M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                Universal Creator
+            </a>
+            <div class="top-note"><span class="sparkle" aria-hidden="true">✳</span> A little structure goes a long way</div>
         </div>
     </header>
-
-    <div class="cart-overlay" id="cartOverlay"></div>
-    <aside class="cart-panel" id="cartMenu" aria-hidden="true">
-        <div class="cart-header">
-            <h3>Shopping cart</h3>
-            <button type="button" class="close-cart" id="closeCart" aria-label="Close cart">✕</button>
-        </div>
-
-        <div class="cart-items" id="cartItems">
-            <div class="empty-state">Your cart is empty.</div>
-        </div>
-
-        <div class="cart-footer">
-            <div class="subtotal-row">
-                <span>Subtotal</span>
-                <strong id="cartTotal">$0</strong>
-            </div>
-            <button type="button" class="checkout-btn">Checkout</button>
-        </div>
-    </aside>
-
     <main>
-        <aside>
-            <div class="category-card">
-                <div class="category-icon">🏠</div>
-                <div class="category-label">Home</div>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">👗</div>
-                <div class="category-label">Fashion</div>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">💻</div>
-                <div class="category-label">Tech</div>
-            </div>
-            <div class="promo-card">
-                <div class="promo-label">SHOP SALES</div>
-                <div class="promo-text">New season</div>
-            </div>
-            <div class="promo-card">
-                <div class="promo-label">ADS</div>
-                <div class="promo-text">Up to 40% OFF</div>
-            </div>
-        </aside>
-
-        <section class="products-panel" aria-label="Product listings">
-            <div class="product-section">
-                <div class="section-header">
-                    <h2 class="section-title">Sales</h2>
-                    <div class="nav-buttons">
-                        <button class="nav-btn" type="button" aria-label="Previous sales">&#8249;</button>
-                        <button class="nav-btn" type="button" aria-label="Next sales">&#8250;</button>
-                    </div>
-                </div>
-
-                <div class="product-grid">
-                    <article class="product-card">
-                        <div class="product-image">🧥</div>
-                        <span class="product-tag">Trending</span>
-                        <h3 class="product-name">Classic Warm Jacket</h3>
-                        <div class="price-row">
-                            <span class="price-current">$129</span>
-                            <span class="price-old">$179</span>
-                            <span class="discount">-28%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Classic Warm Jacket" data-price="129" data-desc="Lightweight winter layering" data-image="🧥">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-
-                    <article class="product-card">
-                        <div class="product-image">👟</div>
-                        <span class="product-tag">Hot</span>
-                        <h3 class="product-name">Urban Street Sneakers</h3>
-                        <div class="price-row">
-                            <span class="price-current">$169</span>
-                            <span class="price-old">$219</span>
-                            <span class="discount">-23%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Urban Street Sneakers" data-price="169" data-desc="All-day cushioned comfort" data-image="👟">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-
-                    <article class="product-card">
-                        <div class="product-image">🎧</div>
-                        <span class="product-tag">Top Pick</span>
-                        <h3 class="product-name">Noise Cancelling Headphones</h3>
-                        <div class="price-row">
-                            <span class="price-current">$245</span>
-                            <span class="price-old">$320</span>
-                            <span class="discount">-24%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Noise Cancelling Headphones" data-price="245" data-desc="Premium wireless audio" data-image="🎧">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-                </div>
-            </div>
-
-            <div class="product-section">
-                <div class="section-header">
-                    <h2 class="section-title">New Products</h2>
-                    <div class="nav-buttons">
-                        <button class="nav-btn" type="button" aria-label="Previous new products">&#8249;</button>
-                        <button class="nav-btn" type="button" aria-label="Next new products">&#8250;</button>
-                    </div>
-                </div>
-
-                <div class="product-grid">
-                    <article class="product-card">
-                        <div class="product-image">⌚</div>
-                        <span class="product-tag">New</span>
-                        <h3 class="product-name">Smart Watch Pro</h3>
-                        <div class="price-row">
-                            <span class="price-current">$329</span>
-                            <span class="price-old">$410</span>
-                            <span class="discount">-20%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Smart Watch Pro" data-price="329" data-desc="Fitness and notifications" data-image="⌚">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-
-                    <article class="product-card">
-                        <div class="product-image">🧳</div>
-                        <span class="product-tag">Fresh</span>
-                        <h3 class="product-name">Travel Carry Case</h3>
-                        <div class="price-row">
-                            <span class="price-current">$115</span>
-                            <span class="price-old">$145</span>
-                            <span class="discount">-21%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Travel Carry Case" data-price="115" data-desc="Compact carry solution" data-image="🧳">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-
-                    <article class="product-card">
-                        <div class="product-image">📱</div>
-                        <span class="product-tag">Popular</span>
-                        <h3 class="product-name">Pocket Smart Phone</h3>
-                        <div class="price-row">
-                            <span class="price-current">$949</span>
-                            <span class="price-old">$1120</span>
-                            <span class="discount">-15%</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-btn" type="button" data-name="Pocket Smart Phone" data-price="949" data-desc="Fast everyday performance" data-image="📱">Add to cart</button>
-                            <button class="favorite-btn" type="button" aria-label="Favorite">♡</button>
-                        </div>
-                    </article>
-                </div>
-            </div>
+        <section class="hero" aria-labelledby="page-title">
+            <p class="eyebrow">Your ideas, with a little direction</p>
+            <h1 id="page-title">Make your next idea <em>happen.</em></h1>
+            <p class="hero-copy">Turn a rough idea into something you can use. Choose a guide, follow the steps, then copy a ready-made prompt into your AI assistant—or use the template yourself.</p>
+            <label class="search-wrap">
+                <span class="sr-only">Search templates</span>
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <input class="search" id="search" type="search" placeholder="What are you working on?" autocomplete="off">
+                <span class="search-hint" aria-hidden="true">⌘ K</span>
+            </label>
         </section>
-
-        <aside class="right-aside">
-            <div class="mini-card">
-                <div class="promo-label">FREE SHIP</div>
-                <div class="promo-text">Orders over $100</div>
-            </div>
-            <div class="mini-card">
-                <div class="promo-label">BEST DEALS</div>
-                <div class="promo-text">Smart picks for you</div>
-            </div>
-            <div class="mini-card">
-                <div class="promo-label">NEW DROP</div>
-                <div class="promo-text">Fresh arrivals this week</div>
-            </div>
-        </aside>
+        <section class="workspace" aria-label="Template library">
+            <aside class="sidebar">
+                <h2 class="side-label">Explore templates</h2>
+                <nav class="section-list" id="section-list" aria-label="Template sections"></nav>
+                <div class="sidebar-foot">
+                    <div class="sparkle" aria-hidden="true">✳</div>
+                    <strong>Start messy. Get clear.</strong>
+                    <p>These are starting points, not rules. Change anything to make it work for you.</p>
+                </div>
+            </aside>
+            <article class="detail" id="detail" aria-live="polite"></article>
+        </section>
     </main>
-
-    <footer></footer>
-
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script>
-        const cartBtn = document.getElementById('cartBtn');
-        const cartOverlay = document.getElementById('cartOverlay');
-        const cartMenu = document.getElementById('cartMenu');
-        const closeCartBtn = document.getElementById('closeCart');
-        const cartItems = document.getElementById('cartItems');
-        const cartCount = document.getElementById('cartCount');
-        const cartTotal = document.getElementById('cartTotal');
-        const cart = [];
+        const templates = [
+            {
+                id: "project-blueprint", name: "Project blueprint", icon: "▤", category: "Plan & organize",
+                description: "Turn an early idea into a clear project outline, practical steps, and a reusable template.",
+                steps: [
+                    "Name the project and explain it in one short sentence.",
+                    "Describe the user's problem before proposing your solution.",
+                    "Ask your AI assistant to make the steps clear and reusable."
+                ],
+                template: `Create a clear, practical project blueprint from my notes. Ask concise questions if important details are missing. Do not invent facts; mark unknowns as [NEEDS INPUT]. Keep the headings below and use plain language.\n\nPROJECT NAME\n[Clear, memorable project name]\n\nSHORT DESCRIPTION\n[What is this project? Summarize it in 1–2 sentences.]\n\nUSER PROBLEM\n[Who has this problem? What are they trying to do, and what makes it difficult today?]\n\nPROPOSED SOLUTION\n[How will this project solve the problem? Describe the core idea and its value.]\n\nSTEP-BY-STEP INSTRUCTIONS\n1. [First action, with enough detail to get started]\n2. [Next action]\n3. [Next action]\n4. [How to check the result or know you're done]\n\nREUSABLE TEMPLATE\n[Provide a copy-ready template, checklist, or prompt that someone can reuse for this task. Use clear placeholders such as [PROJECT NAME] where details should change.]\n\nMY NOTES / CONSTRAINTS\n[Audience, goals, tools, timeline, tone, or anything else to consider]`
+            },
+            {
+                id: "task-plan", name: "Task planner", icon: "☷", category: "Plan & organize",
+                description: "Break a big, fuzzy goal into manageable actions you can actually start.",
+                steps: ["Write down the finished result in one sentence.", "Work backward into small, concrete actions.", "Give each action an owner and a realistic due date."],
+                template: `Help me turn this goal into a practical task plan. Ask questions if key details are missing, and don't make up facts.\n\nGOAL\n[What will be true when this is done?]\n\nWHY IT MATTERS\n[Who benefits, and how?]\n\nNEXT ACTIONS\n[ ] [A small, specific action] — [Owner] — [Date]\n[ ] [A small, specific action] — [Owner] — [Date]\n[ ] [A small, specific action] — [Owner] — [Date]\n\nNEEDS / DEPENDENCIES\n[What or who do you need before moving forward?]\n\nDONE MEANS\n[How will you know this is complete?]`
+            },
+            {
+                id: "content-brief", name: "Content brief", icon: "✎", category: "Write & create",
+                description: "Shape a clear direction for a post, article, video, or anything you want to share.",
+                steps: ["Choose one audience and one useful takeaway.", "Set the tone and format before you start drafting.", "End with one clear next step for your reader."],
+                template: `Help me develop a focused content brief from my notes. Ask for missing context rather than guessing.\n\nWORKING TITLE\n[An inviting, specific title]\n\nAUDIENCE\n[Who is this for? What do they already know?]\n\nPURPOSE\nAfter this, the reader will be able to [outcome].\n\nKEY MESSAGE\n[The one idea you want them to remember]\n\nFORMAT & TONE\n[Post, article, video, etc.] · [Friendly, practical, curious...]\n\nKEY POINTS\n1. [First supporting idea]\n2. [Second supporting idea]\n3. [Third supporting idea]\n\nCALL TO ACTION\n[What should the reader do next?]`
+            },
+            {
+                id: "meeting-notes", name: "Meeting notes", icon: "▧", category: "Work together",
+                description: "Make meetings easier to follow up on with a shared record of decisions and next steps.",
+                steps: ["Share the purpose and desired outcome in advance.", "Capture decisions and owners, not every word.", "Send the action list while the conversation is fresh."],
+                template: `Organize these meeting notes into a concise, useful record. Separate confirmed decisions from open questions. Don't infer missing details.\n\nMEETING: [Name or topic]\nDATE: [Date]   PEOPLE: [Attendees]\n\nPURPOSE\n[What do we need to leave with?]\n\nKEY DISCUSSION\n• [Topic] — [Important context]\n• [Topic] — [Important context]\n\nDECISIONS\n• [Decision] — [Reason, if useful]\n\nFOLLOW-UPS\n[ ] [Action] — [Owner] — [Due date]\n[ ] [Action] — [Owner] — [Due date]\n\nPARKING LOT\n[Questions to revisit later]`
+            },
+            {
+                id: "launch-plan", name: "Launch plan", icon: "↗", category: "Plan & organize",
+                description: "Coordinate a launch around the people, moments, and details that matter most.",
+                steps: ["Define what you're launching and who should care.", "Work backward from the launch date.", "Assign a clear owner to every important detail."],
+                template: `Help me create a realistic launch plan. Ask about missing dates, owners, or risks; don't invent them.\n\nWHAT'S LAUNCHING\n[Product, project, event, or announcement]\n\nAUDIENCE & PROMISE\n[Who is it for? What value will they get?]\n\nLAUNCH DATE\n[Target date] · [Go / no-go owner]\n\nBEFORE LAUNCH\n[ ] [Task] — [Owner] — [Date]\n[ ] [Task] — [Owner] — [Date]\n\nLAUNCH DAY\n[Key action or moment]\n[Who needs to be ready?]\n\nAFTER LAUNCH\n[How will we gather feedback and measure success?]\n\nRISKS & BACKUP PLAN\n[What might go wrong, and what will we do?]`
+            }
+        ];
 
-        const formatCurrency = (value) => `$${value.toFixed(0)}`;
+        const nav = document.getElementById("section-list");
+        const detail = document.getElementById("detail");
+        const search = document.getElementById("search");
+        const toast = document.getElementById("toast");
+        let selectedId = templates[0].id;
+        let toastTimer;
 
-        function renderCart() {
-            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalValue = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
-            cartCount.textContent = totalItems;
-            cartTotal.textContent = formatCurrency(totalValue);
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<div class="empty-state">Your cart is empty.</div>';
+        function renderList(query = "") {
+            const normalized = query.trim().toLowerCase();
+            const matches = templates.filter(item =>
+                `${item.name} ${item.category} ${item.description}`.toLowerCase().includes(normalized)
+            );
+            nav.replaceChildren();
+            if (!matches.length) {
+                nav.innerHTML = '<p class="empty-state">No matching templates yet.</p>';
+                detail.innerHTML = '<div class="empty-state">Try another search, or clear the field to explore all templates.</div>';
                 return;
             }
-
-            cartItems.innerHTML = cart.map((item) => `
-                <div class="cart-item">
-                    <div class="cart-thumb">${item.image}</div>
-                    <div class="cart-item-info">
-                        <p class="cart-item-name">${item.name}</p>
-                        <p class="cart-item-desc">${item.desc}</p>
-                        <div class="cart-item-price">${formatCurrency(item.price)} × ${item.qty}</div>
-                    </div>
-                    <button class="cart-item-remove" type="button" data-name="${item.name}" aria-label="Remove ${item.name}">✕</button>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.cart-item-remove').forEach((removeBtn) => {
-                removeBtn.addEventListener('click', () => {
-                    const itemName = removeBtn.dataset.name;
-                    const itemIndex = cart.findIndex((item) => item.name === itemName);
-                    if (itemIndex === -1) return;
-
-                    const item = cart[itemIndex];
-                    if (item.qty > 1) {
-                        item.qty -= 1;
-                    } else {
-                        cart.splice(itemIndex, 1);
-                    }
-
-                    renderCart();
+            if (!matches.some(item => item.id === selectedId)) selectedId = matches[0].id;
+            for (const item of matches) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "section-button";
+                button.setAttribute("aria-current", String(item.id === selectedId));
+                button.innerHTML = `<span class="section-icon" aria-hidden="true">${item.icon}</span><span class="section-name"></span><span class="section-count">${String(templates.indexOf(item) + 1).padStart(2, "0")}</span>`;
+                button.querySelector(".section-name").textContent = item.name;
+                button.addEventListener("click", () => {
+                    selectedId = item.id;
+                    renderList(search.value);
                 });
-            });
-        }
-
-        function openCart() {
-            cartMenu.classList.add('open');
-            cartOverlay.classList.add('open');
-            cartMenu.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('cart-open');
-        }
-
-        function closeCart() {
-            cartMenu.classList.remove('open');
-            cartOverlay.classList.remove('open');
-            cartMenu.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('cart-open');
-        }
-
-        cartBtn.addEventListener('click', () => {
-            if (cartMenu.classList.contains('open')) {
-                closeCart();
-            } else {
-                openCart();
+                nav.appendChild(button);
             }
-        });
+            renderDetail(matches.find(item => item.id === selectedId));
+        }
 
-        cartBtn.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
+        function renderDetail(item) {
+            detail.innerHTML = `
+                <div class="detail-top">
+                    <div class="breadcrumb"><span>Library</span><span aria-hidden="true">/</span><span>${item.category}</span></div>
+                    <div class="ready-tag"><span class="ready-dot"></span> Ready to make your own</div>
+                </div>
+                <div class="title-row">
+                    <div><h2>${item.name}</h2><p>${item.description}</p></div>
+                    <button class="copy-button" id="copy-button" type="button">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        Copy template
+                    </button>
+                </div>
+                <section class="instructions" aria-labelledby="instruction-heading">
+                    <div class="instructions-heading" id="instruction-heading"><span aria-hidden="true">✳</span> A simple way to use it</div>
+                    <ol class="steps">${item.steps.map(step => `<li>${step}</li>`).join("")}</ol>
+                </section>
+                <div class="template-heading"><strong>Your starting point</strong><span>Copy into your AI assistant, or fill it in yourself</span></div>
+                <div class="template-box"><pre class="template-text"></pre></div>
+                <div class="privacy-note">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    No account needed. Your ideas stay yours.
+                </div>`;
+            detail.querySelector(".template-text").textContent = item.template;
+            document.getElementById("copy-button").addEventListener("click", () => copyTemplate(item));
+        }
+
+        async function copyTemplate(item) {
+            try {
+                await navigator.clipboard.writeText(item.template);
+                showToast("Template copied — paste it into your AI assistant.");
+            } catch {
+                const field = document.createElement("textarea");
+                field.value = item.template;
+                field.setAttribute("readonly", "");
+                field.style.position = "fixed";
+                field.style.opacity = "0";
+                document.body.appendChild(field);
+                field.select();
+                const copied = document.execCommand("copy");
+                field.remove();
+                if (copied) showToast("Template copied — paste it into your AI assistant.");
+                else showToast("Couldn't copy automatically. Select the template and copy it.");
+            }
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add("visible");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove("visible"), 2600);
+        }
+
+        search.addEventListener("input", () => renderList(search.value));
+        document.addEventListener("keydown", event => {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
                 event.preventDefault();
-                if (cartMenu.classList.contains('open')) {
-                    closeCart();
-                } else {
-                    openCart();
-                }
+                search.focus();
+            }
+            if (event.key === "Escape" && document.activeElement === search) {
+                search.value = "";
+                renderList();
+                search.blur();
             }
         });
-
-        cartOverlay.addEventListener('click', closeCart);
-        closeCartBtn.addEventListener('click', closeCart);
-
-        document.querySelectorAll('.add-btn').forEach((button) => {
-            button.addEventListener('click', () => {
-                const name = button.dataset.name;
-                const price = Number(button.dataset.price || 0);
-                const desc = button.dataset.desc || 'Premium item';
-                const image = button.dataset.image || '🛍️';
-
-                const existing = cart.find((item) => item.name === name);
-                if (existing) {
-                    existing.qty += 1;
-                } else {
-                    cart.push({ name, price, desc, image, qty: 1 });
-                }
-
-                renderCart();
-                openCart();
-            });
-        });
-
-        renderCart();
+        renderList();
     </script>
 </body>
 </html>
